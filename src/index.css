@@ -36,11 +36,6 @@ code {
   border-radius: 1.5rem;
 }
 
-.active-label {
-  color: #0C0E1B;
-  background-color: #FE6F6B;
-}
-
 .timer-container {
   display: flex;
   flex:2;
@@ -68,7 +63,7 @@ code {
   padding:2rem
 }
 
-button {
+button {  
   color:#efefef;
   font-size:0.8rem;
   padding: 0.5rem 1.2rem;
@@ -78,7 +73,20 @@ button {
   background:#0C0E1B;
   min-width: 80px;
   cursor: pointer;
+  
 }
+button:focus { 
+  outline-style: none; 
+}
+
+button:active{
+  background:olive;
+}
+.active-label {
+  color: #0C0E1B;
+  background-color: olive;
+}
+
 
 .button-wrapper button.activve {
   color: #0C0E1B;
@@ -87,6 +95,11 @@ button {
 }
 .form-container {
   text-align: center;
+}
+
+.countdown__custom{
+  display: flex;
+  justify-content: center;
 }
 .input-wrapper {
   margin: 1.5rem;

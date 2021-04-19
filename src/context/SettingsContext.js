@@ -4,78 +4,82 @@ export const SettingsContext = createContext()
 
 function SettingsContextProvider(props) {
 
-    const [pomodoro, setPomodoro] = useState(0)
-    const [executing, setExecuting] = useState({})
-    const [startAnimate, setStartAnimate] = useState(false)
+    // const [pomodoro, setPomodoro] = useState(0)
+    const defaultTime = 20
 
-    function setCurrentTimer(active_state) {
-        updateExecute({
-            ...executing,
-            active: active_state
-        })
-        setTimerTime(executing)
+    const [pomodoroCurrentTime, setPomodoroCurrentTime] = useState(defaultTime)
+    const [timerRunning, setTimerRunning] = useState(false)
+    const [workingTime, setWorkingTime] = useState(defaultTime)
+    const [breakTime, setBreakTime] = useState(5)
+    const [sound, setSound] = useState('on')
+    const [pomodoroCycle, setPomodoroCycle] = useState('work')
+    const [timer, setTimer] = useState(0) 
+    
+   
+
+    function toogleSound() {
+        sound === 'on' ?
+            setSound('off') :
+            setSound('on')
+    }
+    function toogleTimer() {
+        timerRunning === false ?
+        setTimerRunning(true) :
+        setTimerRunning(false)
+      
+    }
+    
+
+    function addWorkingTime() {
+        setWorkingTime(workingTime + 1)
+    }
+    function removeWorkingTime() {
+        if (workingTime > 0)
+            setWorkingTime(workingTime - 1)
+    }
+    function addBreakTime() {
+        setBreakTime(breakTime + 1)
+    }
+    function removeBreakTime() {
+        if (workingTime > 0)
+            setBreakTime(breakTime - 1)
     }
 
-    // start animation fn 
-    function startTimer() {
-        setStartAnimate(true)
+    function changePomodoroCycle(cycle) {
+        console.log(cycle)
+        setPomodoroCycle(cycle)
     }
-    // pause animation fn 
-    function pauseTimer() {
-        setStartAnimate(false)
+    function activeWorkingTime () {
+        if(pomodoroCycle !== 'work'){
+            setPomodoroCycle('work')
+            setPomodoroCurrentTime(workingTime)
+        }
     }
-    // pass time to counter 
-    const children = ({ remainingTime }) => {
-        const minutes = Math.floor(remainingTime / 60)
-        const seconds = remainingTime % 60
-
-        return `${minutes}:${seconds}`
-    }
-
-    // clear session storage 
-    const SettingsBtn = () => {
-        setExecuting({})
-        setPomodoro(0)
-    }
-
-    const updateExecute = updatedSettings => {
-        setExecuting(updatedSettings)
-        setTimerTime(updatedSettings)
-    }
-
-    const setTimerTime = (evaluate) => {
-        switch (evaluate.active) {
-            case 'work':
-                setPomodoro(evaluate.work)
-                break;
-            case 'short':
-                setPomodoro(evaluate.short)
-                break;
-            case 'long':
-                setPomodoro(evaluate.long)
-                break;
-            default:
-                setPomodoro(0)
-                break;
+    function activeBreakTime() {
+        if(pomodoroCycle !== 'break'){
+            setPomodoroCycle('break')
+            setPomodoroCurrentTime(breakTime)
         }
     }
 
-    function stopAimate() {
-        setStartAnimate(false)
-    }
 
     return (
         <SettingsContext.Provider value={{
-            pomodoro,
-            executing,
-            updateExecute,
-            startAnimate,
-            startTimer,
-            pauseTimer,
-            children,
-            SettingsBtn,
-            setCurrentTimer,
-            stopAimate
+            workingTime,
+            breakTime,
+            sound,
+            pomodoroCycle,
+            toogleSound,
+            addWorkingTime,
+            removeWorkingTime,
+            addBreakTime,
+            removeBreakTime,
+            changePomodoroCycle,
+            activeWorkingTime,
+            activeBreakTime,
+            pomodoroCurrentTime,
+            timerRunning,
+            toogleTimer
         }}>
             {props.children}
         </SettingsContext.Provider>
