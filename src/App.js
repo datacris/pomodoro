@@ -27,7 +27,7 @@ function AppPomodoro(props) {
     return (
         <div className="container">
             <h1>Pomodoro</h1>
-            <small>Pomodoro Timer.</small>
+            <small>Pomodoro Timer By Cristian Zuluaga.</small>
          
             <PomodoroCountdown
                 time={pomodoroCurrentTime} running={timerRunning} toogleTimer={toogleTimer}
