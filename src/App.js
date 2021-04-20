@@ -21,7 +21,7 @@ function AppPomodoro(props) {
         activeBreakTime,
         pomodoroCurrentTime,
         timerRunning,
-        toogleTimer
+        toogleTimer 
     } = useContext(SettingsContext)
 
     return (
